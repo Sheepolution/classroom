@@ -115,7 +115,7 @@ end
 
 ##### Read-only
 
-The value of read-only properties cannot be edited after it has been set.  Properties can be made read-only with the `readonly_` prefix.
+The value of read-only properties cannot be edited after it has been set. So unless the property already has a default value, this value can be set in the constructor. Properties can be made read-only with the `readonly_` prefix.
 
 ```lua
 Point = Class()
