@@ -3,24 +3,23 @@
 Strict OOP in Lua.
 
 **Features**
-* Inheritance
+* Inheritance.
 * Access modifiers: `public`, `protected` and `private`.
-* Static and readonly properties
-* Strictly typed properties and parameters
+* Static and read-only properties.
+* Strictly typed properties and parameters.
 * And almost everything else you'd expect from a proper class system.
 
-Classroom aims to work similarly to [Typescript](https://github.com/microsoft/TypeScript), but is in some cases more or less strict.
+Classroom aims to work similarly to [Typescript](https://github.com/microsoft/TypeScript), but it's more strict in some places, less in others.
 
 ## Usage
 
-The [module](classroom.lua) should be dropped in to an existing project and
-required by it:
+The [module](classroom.lua) should be dropped into an existing project, and required by it:
 
 ```lua
 Class = require "classroom"
 ```
 
-The module returns an object that allows you to create classes by calling this object.
+The module returns an object that allows you to create classes by calling said object.
 
 
 ### Creating a new class
@@ -54,7 +53,7 @@ function Point:constructor()
 end
 ```
 
-Defining a property without a default value, who's value is also not set in the constructor, will result in an error. See [Data modifiers](#data-modifiers) for some exceptions.
+Defining a property without a default value, whose value is also not set in the constructor, will result in an error. See [Data modifiers](#data-modifiers) for some exceptions.
 
 ```lua
 Point = Class()
@@ -74,11 +73,11 @@ end
 
 ##### Access Modifiers
 
-By default properties are public, but they can also be made protected and private.
+By default, properties are public, but they can be made protected or private instead.
 
 * `public` - Can be used everwhere.
-* `protected` - Can only be used inside this class and its children. 
-* `private` - Can only be used inside this class.
+* `protected` - Can only be used inside its own class and the class' children. 
+* `private` - Can only be used inside its own class.
 
 You set the access modifier by prefixing the property's name with it. These properties are then accessed without the prefixes.
 
@@ -132,7 +131,7 @@ end
 
 ##### Strict types
 
-By default properties are of the type 'any', meaning their value can be of any type. But their type can also be set. Properties can be one or multiple of the following types:
+By default, properties are of the type 'any', meaning their value can be of any type; But their type can also be set. Properties can be one or multiple of the following types:
 
 * `any`
 * `boolean`
@@ -145,7 +144,7 @@ By default properties are of the type 'any', meaning their value can be of any t
 * `function`
 * `class` *
 
-\* This is a special type. See below for more info.
+\* This is a special type; See below for more info.
 
 Properties that are of the type `nil` are not required to have a value set in the constructor.
 
@@ -180,7 +179,7 @@ function NPC:constructor()
 end
 ```
 
-The `class` type allows you to set one or multiple classes as the type of the property. The value that has been passed will not be set as the default value of that property, unless the prefix `true_` is added after the `class_` prefix. If you want to specify for clarity that the value should not set, the prefix `false_` can be used instead.
+The `class` type allows you to set one or multiple classes as the type of the property. The value that has been passed will not be set as the default value of that property, unless the prefix `true_` is added after the `class_` prefix. If you want to specify for clarity that the value should not be set, the prefix `false_` can be used instead.
 
 ```lua
 NPC = Class()
@@ -208,7 +207,7 @@ function NPC:constructor()
 end
 ```
 
-As with any type, the `class` type can be combined with other types. Again, if you want to set a default value different from the class, you can do so by having it be the first value in the given table.
+As with any type, the `class` type can be combined with other types. Again, if you want to set a default value that's different from the class, you can do so by having it be the first value in the given table.
 
 ```lua
 NPC = Class()
@@ -272,7 +271,7 @@ npc.setName = function () end -- Allowed
 
 #### Parameters
 
-Type-stricted parameters can be set by calling the `parameters` method right before creating the method. For each parameter you pass the type as a string.
+Strictly-typed parameters can be set by calling the `parameters` method right before creating the method. For each parameter you pass the type as a string.
 
 ```lua
 NPC = Class()
@@ -289,7 +288,7 @@ end
 ```lua
 npc = NPC("Steve", "twenty") -- ERROR! 'string' is not assignable to 'number'.
 ```
-You can set multiple types for each parameter by separating them with a `|`, or by using a table. You want to use the latter in case you want to use classes as types. For nillable types you can either add the type `|nil` or the 2 character shorter version `|?`.
+You can set multiple types for each parameter by separating them with a `|`, or by using a table. You want to use the latter in case you want to use classes as types. For nillable types, you can either add the type `|nil` or the shorter `|?`.
 
 ```lua
 NPC = Class()
@@ -312,9 +311,9 @@ function NPC:addFriend(friend)
   table.insert(self.friends, friend)
 end
 ```
-You can set a default value for each parameter. Either you pass the value, and it's type will be used as the type for that parameter, or you pass a table with a `default` property.
+You can set a default value for each parameter. Either you pass the value and its type will be used as the type for that parameter, or you pass a table with a `default` property.
 
-Unlike some other programming languages, the normal parameters, nillable parameters, and parameters with default values, can be placed in any order you like.
+Unlike some other programming languages, the normal parameters, nillable parameters, and parameters with default values can be placed in any order you like.
 
 ```lua
 NPC = Class()
@@ -360,7 +359,7 @@ Child classes can only use the `protected` and `public` properties of their pare
 
 When overriding functions, the type of the parameters should match those of the parent's function. The only exception being the constructor.
 
-Matching the type means that all the types of the child's property should be present in the parent's property. If the parent's property is of the type `string|number|boolean`, then it's okay for the child's property to be of the type `string|number` or `number|boolean`, but it cannot be `string|table` or `number|nil`. Similarly the child's function can have less or equal amount parameters than its parent's function, but not more.
+Matching the type means that all the types of the child's property should be present in the parent's property. If the parent's property is of the type `string|number|boolean`, then it's okay for the child's property to be of the type `string|number` or `number|boolean`, but it cannot be `string|table` or `number|nil`. Similarly the child's function can have less or equal amount of parameters than its parent's function, but not more.
 
 ```lua
 Point = Class()
@@ -477,11 +476,10 @@ To check if properties are accessed from the correct directory the module looks 
 
 ## Why?
 
-This module was made as a challenge. Using the power metatables, to what end can we reach the strict OOP that so many other programming languages have? This module is not recommended for serious usage. Besides performance issues, strict OOP simply does not belong in the mindset of Lua. That said, if someone does complain about the lack of strict OOP in Lua, this module is their answer.
+This module was made as a challenge. Using the power of metatables, to what end can we reach the strict OOP that so many other programming languages have? This module is not recommended for serious usage. Besides performance issues, strict OOP simply does not belong in the mindset of the Lua language. That said, if someone does complain about the lack of strict OOP in Lua, this module is their answer.
 
 ## License
 
-This module is free software; you can redistribute it and/or modify it under
-the terms of the MIT license. See [LICENSE](LICENSE) for details.
+This module is free software; you can redistribute it and/or modify it under the terms of the MIT license. See [LICENSE](LICENSE) for details.
 
 This module is based on [rxi](https://github.com/rxi)'s [classic](https://github.com/rxi/classic).
