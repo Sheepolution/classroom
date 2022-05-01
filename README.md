@@ -337,7 +337,7 @@ end
 
 ### Inheritance
 
-Classes can be extended using `extend`. Child classes are required to call `super(self)` in the constructor. By calling `super`, you call the parent's method of the function it is used in.
+Classes can be extended using `extend`. Child classes are required to call `super(self)` in the constructor. By calling `super.[name]`, you call the parent's method of the function it is used in.
 
 ```lua
 Rectangle = Point:extend()
@@ -350,6 +350,10 @@ function Rectangle:constructor(x, y, width, height)
   Rectangle.super(self, x, y)
   self.width = width
   self.height = height
+end
+
+function Rectangle:getPosition()
+  Rectangle.super.getPosition(self)
 end
 ```
 

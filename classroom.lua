@@ -887,9 +887,10 @@ function Class:extend()
   end
 
   function super_meta.__call(m, s, ...)
-    local name = debug.getinfo(2, "n").name
+    local name = "constructor"
 
-    if not constructor_check[cls] then
+    local parent = rawget(s, "__PR")
+    if parent and not constructor_check[parent] then
       if name == "constructor" then
         rawget(s, "__C")[self] = true
       end
@@ -1063,6 +1064,7 @@ function Class:__call(...)
   if not constructor_check[self] then
     constructors = {}
     rawset(obj, "__C", constructors)
+    rawset(obj, "__PR", constructors)
   end
 
   obj:constructor(...)
@@ -1078,6 +1080,7 @@ function Class:__call(...)
     end
 
     rawset(obj, "__C", nil)
+    rawset(obj, "__PR", nil)
     constructor_check[self] = true
   end
 
