@@ -377,7 +377,7 @@ function Point:constructor(x, y)
   self.y = y
 end
 
-function Point:parameters("number|string", "number|string")
+Point:parameters("number|string", "number|string")
 function Point:set(x, y)
   self.x = x
   self.y = y
@@ -402,7 +402,7 @@ end
 -- 'string' is present in 'number|string' and therefore is allowed.
 -- ERROR! 'number|table' not assignable to 'number|string'.
 -- ERROR! Number of parameters overrides that of parent.
-function Rectangle:parameters("string", "number|table", "number", "number")
+Rectangle:parameters("string", "number|table", "number", "number")
 function Rectangle:set(x, y, width, height)
   self.x = x
   self.y = y
